@@ -1,1 +1,4 @@
 # neuralnetworkabstraction
+
+# publications
+[1] ...
