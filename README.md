@@ -2,6 +2,7 @@
 
 ![NNA logo](https://raw.githubusercontent.com/ptrbman/neuralnetworkabstraction/master/docs/nna_logo.png)
 
+This software demonstrates the approach of identifying insignificant inputs of a neural network using abstraction.
 
 ## Usage
 
