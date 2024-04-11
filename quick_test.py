@@ -18,10 +18,10 @@ def do(generate=False):
         torch_model = ModelGenerator.generate_model(c, [c.n, 2, 3, 1])
         new_nn = TorchAPI.torch2nn(torch_model)
 
-        with open('nn_models/test.mdl', 'wb') as outfile:
+        with open('test.mdl', 'wb') as outfile:
             pickle.dump(new_nn, outfile)
     else:
-        with open('nn_models/test.mdl', 'rb') as infile:
+        with open('test.mdl', 'rb') as infile:
             new_nn = pickle.load(infile)
 
     #TODO: Do we want split to be mutating or do we copy it?
@@ -40,4 +40,4 @@ def do(generate=False):
     print("Significant:      \t", c.significant_vars)
     print("Found Significant:\t", results)
 
-do(False)
+do(True)
