@@ -1,0 +1,24 @@
+.. NeuralNetworkAbstraction documentation master file, created by
+   it should contain the root `toctree** directive.
+
+Welcome to NeuralNetworkAbstraction's documentation!
+====================================================
+
+**NeuralNetworkAbstraction** is the prototype implementation to demonstrate the
+process of identifying insignificant inputs using neural network abstraction.
+
+Contents
+--------
+
+.. toctree::
+
+   usage
+   api
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+
+

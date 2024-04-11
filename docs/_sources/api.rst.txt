@@ -1,0 +1,46 @@
+API
+===
+
+Configuration
+-------------
+.. autoclass:: nna.configuration.Configuration
+
+Layer
+--------
+.. autoclass:: nna.neural_net.Layer
+.. autofunction:: nna.neural_net.Layer.updateColors
+.. autofunction:: nna.neural_net.Layer.getInputColors
+
+
+MarabouAPI
+--------
+.. autoclass:: nna.marabou_api.MarabouAPI
+.. autofunction:: nna.marabou_api.MarabouAPI.verify_model
+
+ModelGenerator
+--------
+.. autoclass:: nna.model_generator.ModelGenerator
+.. autofunction:: nna.model_generator.ModelGenerator.f
+.. autofunction:: nna.model_generator.ModelGenerator.create_network
+.. autofunction:: nna.model_generator.ModelGenerator.gen_data
+.. autofunction:: nna.model_generator.ModelGenerator.generate_model
+
+NeuralNet
+--------
+.. autoclass:: nna.neural_net.NeuralNet
+.. autofunction:: nna.neural_net.NeuralNet.getWeights
+.. autofunction:: nna.neural_net.NeuralNet.getBias
+.. autofunction:: nna.neural_net.NeuralNet.split_node
+.. autofunction:: nna.neural_net.NeuralNet.color_network
+.. autofunction:: nna.neural_net.NeuralNet.layer_sizes
+.. autofunction:: nna.neural_net.NeuralNet.remove_input
+.. autofunction:: nna.neural_net.NeuralNet.merge_input_layer
+.. autofunction:: nna.neural_net.NeuralNet.merge_layers
+.. autofunction:: nna.neural_net.NeuralNet.create_difference_network
+
+
+TorchAPI
+--------
+.. autoclass:: nna.torch_api.TorchAPI
+.. autofunction:: nna.torch_api.TorchAPI.torch2nn
+.. autofunction:: nna.torch_api.TorchAPI.nn2torch

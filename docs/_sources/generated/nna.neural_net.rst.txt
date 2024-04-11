@@ -1,0 +1,30 @@
+﻿nna.neural\_net
+===============
+
+.. automodule:: nna.neural_net
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Layer
+      NeuralNet
+   
+   
+
+   
+   
+   
+
+
+

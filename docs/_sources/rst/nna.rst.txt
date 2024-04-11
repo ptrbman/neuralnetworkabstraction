@@ -1,0 +1,53 @@
+nna package
+===========
+
+Submodules
+----------
+
+nna.configuration module
+------------------------
+
+.. automodule:: nna.configuration
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+nna.marabou\_api module
+-----------------------
+
+.. automodule:: nna.marabou_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+nna.model\_generator module
+---------------------------
+
+.. automodule:: nna.model_generator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+nna.neural\_net module
+----------------------
+
+.. automodule:: nna.neural_net
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+nna.torch\_api module
+---------------------
+
+.. automodule:: nna.torch_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: nna
+   :members:
+   :undoc-members:
+   :show-inheritance:

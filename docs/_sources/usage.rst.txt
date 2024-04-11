@@ -1,0 +1,43 @@
+Usage
+=====
+
+.. _installation:
+
+Installation
+------------
+
+To install, begin by cloning repo.
+
+.. code-block:: console
+
+   $ git clone ....
+
+Ensure that Python 3.x is installed and create a virtual environment:
+
+.. code-block:: console
+
+   $ python -m venv nnenv
+   $ source nnenv/bin/activate
+   (nnenv) $
+
+Then install prerequisites (TensorFlow, Torch, Marabou, ...)
+
+.. code-block:: console
+
+   (nnenv) $ pip ....
+
+
+Quick Test
+------------
+Do to a quick test of the framework, run the supplmented ``quick_test.py``:
+
+.. code-block:: console
+
+   (nnenv) $ python quick_test.py
+
+Note that since initial weights are non-deterministic, the quick test is not
+guaranteed to succeed, but can be stuck in a local optimum.
+
+Additional Test
+---------------
+For more thorough testing, we refer to the README-file in the experiments directory. It is also possible to use the :doc:`api`

@@ -1,0 +1,22 @@
+﻿nna.configuration.Configuration
+===============================
+
+.. currentmodule:: nna.configuration
+
+.. autoclass:: Configuration
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Configuration.__init__
+   
+   
+
+   
+   
+   
