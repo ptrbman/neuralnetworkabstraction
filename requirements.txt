@@ -1,0 +1,4 @@
+maraboupy==1.0.0
+numpy==1.26.4
+tensorflow==2.16.1
+torch==2.2.2+cpu
