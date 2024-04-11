@@ -1,46 +1,53 @@
-API
-===
+nna package
+===========
 
-Configuration
--------------
-.. autoclass:: nna.configuration.Configuration
+Submodules
+----------
 
-Layer
---------
-.. autoclass:: nna.neural_net.Layer
-.. autofunction:: nna.neural_net.Layer.updateColors
-.. autofunction:: nna.neural_net.Layer.getInputColors
+nna.configuration module
+------------------------
 
+.. automodule:: nna.configuration
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-MarabouAPI
---------
-.. autoclass:: nna.marabou_api.MarabouAPI
-.. autofunction:: nna.marabou_api.MarabouAPI.verify_model
+nna.marabou\_api module
+-----------------------
 
-ModelGenerator
---------
-.. autoclass:: nna.model_generator.ModelGenerator
-.. autofunction:: nna.model_generator.ModelGenerator.f
-.. autofunction:: nna.model_generator.ModelGenerator.create_network
-.. autofunction:: nna.model_generator.ModelGenerator.gen_data
-.. autofunction:: nna.model_generator.ModelGenerator.generate_model
+.. automodule:: nna.marabou_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-NeuralNet
---------
-.. autoclass:: nna.neural_net.NeuralNet
-.. autofunction:: nna.neural_net.NeuralNet.getWeights
-.. autofunction:: nna.neural_net.NeuralNet.getBias
-.. autofunction:: nna.neural_net.NeuralNet.split_node
-.. autofunction:: nna.neural_net.NeuralNet.color_network
-.. autofunction:: nna.neural_net.NeuralNet.layer_sizes
-.. autofunction:: nna.neural_net.NeuralNet.remove_input
-.. autofunction:: nna.neural_net.NeuralNet.merge_input_layer
-.. autofunction:: nna.neural_net.NeuralNet.merge_layers
-.. autofunction:: nna.neural_net.NeuralNet.create_difference_network
+nna.model\_generator module
+---------------------------
 
+.. automodule:: nna.model_generator
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-TorchAPI
---------
-.. autoclass:: nna.torch_api.TorchAPI
-.. autofunction:: nna.torch_api.TorchAPI.torch2nn
-.. autofunction:: nna.torch_api.TorchAPI.nn2torch
+nna.neural\_net module
+----------------------
+
+.. automodule:: nna.neural_net
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+nna.torch\_api module
+---------------------
+
+.. automodule:: nna.torch_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: nna
+   :members:
+   :undoc-members:
+   :show-inheritance:
