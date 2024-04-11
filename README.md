@@ -1,5 +1,8 @@
 # neuralnetworkabstraction
 
+![NNA logo](https://raw.githubusercontent.com/ptrbman/neuralnetworkabstraction/master/docs/nna_logo.png)
+
+
 ## Usage
 
 ### Installation
