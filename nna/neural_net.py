@@ -357,6 +357,7 @@ class NeuralNet():
 
         return Layer(name, inputs, nodes, weights, biases)
 
+    # TODO: Add assertion that network is colored
     def create_difference_network(self, input_node):
         """Creates difference network obtained by removing input_note. This is a network
         which as an output obtains the difference between the over-estimation and

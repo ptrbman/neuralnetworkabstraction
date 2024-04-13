@@ -20,11 +20,7 @@ class ModelGenerator():
         """
         sum = 0
         for i in range(config.n):
-            if xs[i] == 1:
-                if i in config.significant_vars:
-                    sum += config.large
-                else:
-                    sum += config.small
+            sum += config.coefficients[i]*xs[i]
         return sum
 
 
