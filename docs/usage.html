@@ -13,7 +13,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
+    <link rel="next" title="nna package" href="api.html" />
     <link rel="prev" title="Welcome to NeuralNetworkAbstraction’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -37,7 +37,7 @@
 <section id="installation">
 <span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <p>To install, begin by cloning repo.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>....
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ptrbman/neuralnetworkabstraction.git
 </pre></div>
 </div>
 <p>Ensure that Python 3.x is installed and create a virtual environment:</p>
@@ -46,8 +46,8 @@
 <span class="gp gp-VirtualEnv">(nnenv)</span> <span class="gp">$</span>
 </pre></div>
 </div>
-<p>Then install prerequisites (TensorFlow, Torch, Marabou, …)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(nnenv)</span> <span class="gp">$ </span>pip<span class="w"> </span>....
+<p>Then install prerequisites (TensorFlow, Torch, Marabou)</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(nnenv)</span> <span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>tensorflow<span class="w"> </span>torch<span class="w"> </span>maraboupy
 </pre></div>
 </div>
 </section>
@@ -58,11 +58,18 @@
 </pre></div>
 </div>
 <p>Note that since initial weights are non-deterministic, the quick test is not
-guaranteed to succeed, but can be stuck in a local optimum.</p>
+guaranteed to succeed, but can be stuck in a local optimum. Furthermore, there is lots of text from the machine learning framework as well as the verification framework which should be irrelevant. The important part are the final three lines:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">...</span>
+<span class="go">Results:</span>
+<span class="go">Significant:         [1, 3]</span>
+<span class="go">Found Significant:   [1, 3]</span>
+</pre></div>
+</div>
+<p>Which shows that the inputs which are found significant by the method are indeed the significant ones.</p>
 </section>
 <section id="additional-test">
 <h2>Additional Test<a class="headerlink" href="#additional-test" title="Link to this heading">¶</a></h2>
-<p>For more thorough testing, we refer to the README-file in the experiments directory. It is also possible to use the <a class="reference internal" href="api.html"><span class="doc">API</span></a></p>
+<p>For more thorough testing, we refer to the README-file in the experiments directory. It is also possible to use the <a class="reference internal" href="api.html"><span class="doc">nna package</span></a></p>
 </section>
 </section>
 
@@ -90,7 +97,7 @@ guaranteed to succeed, but can be stuck in a local optimum.</p>
 <li class="toctree-l2"><a class="reference internal" href="#additional-test">Additional Test</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">nna package</a></li>
 </ul>
 
 <div class="relations">
@@ -98,7 +105,7 @@ guaranteed to succeed, but can be stuck in a local optimum.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Welcome to NeuralNetworkAbstraction’s documentation!</a></li>
-      <li>Next: <a href="api.html" title="next chapter">API</a></li>
+      <li>Next: <a href="api.html" title="next chapter">nna package</a></li>
   </ul></li>
 </ul>
 </div>
