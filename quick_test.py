@@ -33,7 +33,7 @@ def quick_test(generate=False):
     print("Coefficients:      \t", c.coefficients)
     print("Input\tBinary\tIterative:")
     for i, (binary, iterative) in enumerate(zip(binary_bounds, iterative_bounds)):
-        print("\t", i, "\t", binary, "\t", iterative)
+        print(i, "\t", binary, "\t", iterative)
 
 
 quick_test(True)
