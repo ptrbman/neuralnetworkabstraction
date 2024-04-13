@@ -404,6 +404,54 @@ layer+1</p>
 </dd></dl>
 
 </section>
+<section id="module-nna.utils">
+<span id="nna-utils-module"></span><h2>nna.utils module<a class="headerlink" href="#module-nna.utils" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nna.utils.Utils">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nna.utils.</span></span><span class="sig-name descname"><span class="pre">Utils</span></span><a class="headerlink" href="#nna.utils.Utils" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains static functions search for bounds in a difference network.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nna.utils.Utils.binary_bounds">
+<span class="sig-name descname"><span class="pre">binary_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nna.utils.Utils.binary_bounds" title="Link to this definition">¶</a></dt>
+<dd><p>Finds an upper bound (lower than upper_bound) for a nn using binary
+search. Note: if the upper bound is greater than upper_bound, this method will
+return a false result!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nn</strong> – network to find upper bound for</p></li>
+<li><p><strong>upper_bound</strong> – upper_bound of search</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an upper bound for nn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nna.utils.Utils.iterative_bounds">
+<span class="sig-name descname"><span class="pre">iterative_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nna.utils.Utils.iterative_bounds" title="Link to this definition">¶</a></dt>
+<dd><p>Finds an upper bound (lower than upper_bound) for a nn using iterative
+search. If the upper bound is greater than upper_bound, this method will
+return None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nn</strong> – network to find upper bound for</p></li>
+<li><p><strong>upper_bound</strong> – upper_bound of search</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an upper bound for nn or None if none exists smaller than upper_bound</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-nna">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nna" title="Link to this heading">¶</a></h2>
 </section>
@@ -478,6 +526,14 @@ layer+1</p>
 <li class="toctree-l3"><a class="reference internal" href="#nna.torch_api.TorchAPI"><code class="docutils literal notranslate"><span class="pre">TorchAPI</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#nna.torch_api.TorchAPI.nn2torch"><code class="docutils literal notranslate"><span class="pre">TorchAPI.nn2torch()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#nna.torch_api.TorchAPI.torch2nn"><code class="docutils literal notranslate"><span class="pre">TorchAPI.torch2nn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-nna.utils">nna.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nna.utils.Utils"><code class="docutils literal notranslate"><span class="pre">Utils</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nna.utils.Utils.binary_bounds"><code class="docutils literal notranslate"><span class="pre">Utils.binary_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nna.utils.Utils.iterative_bounds"><code class="docutils literal notranslate"><span class="pre">Utils.iterative_bounds()</span></code></a></li>
 </ul>
 </li>
 </ul>

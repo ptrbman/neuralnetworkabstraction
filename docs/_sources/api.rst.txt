@@ -44,6 +44,14 @@ nna.torch\_api module
    :undoc-members:
    :show-inheritance:
 
+nna.utils module
+----------------
+
+.. automodule:: nna.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
