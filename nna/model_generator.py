@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-
-
 import tensorflow as tf
 import random
 import numpy as np
 from tensorflow import keras
 
-# Generate (i.e., trains) a model for a particular generator and saves to disk
 class ModelGenerator():
+    """Contains static functions to generate (i.e., trains) a model for a particular configuration.
+    """
 
-    # TODO: Allow for more interesting functions
+
     def f(xs, config):
         """Computes the function defined by config for inputs xs.
 

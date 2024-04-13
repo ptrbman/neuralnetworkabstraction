@@ -7,7 +7,7 @@ class MarabouAPI:
     """Contains static functions to interface with Marabou verifier.
     """
 
-    def verify_model(infile, bound):
+    def check_bound(infile, bound):
         """Verify if model found in infile is bounded above by bound.
 
         :param infile: file to load pytorch model

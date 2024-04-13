@@ -6,6 +6,10 @@ from nna.torch_api import TorchAPI
 import numpy as np
 
 class Utils:
+    """Contains static functions search for bounds in a difference network.
+    """
+
+
     # If upper_bound is too low, false result is reported
     def binary_bounds(nn, upper_bound):
         """Finds an upper bound (lower than upper_bound) for a nn using binary
@@ -56,7 +60,7 @@ class Utils:
 
             b = 1
             found_bound = False
-            while not found_bound and b <= upper:
+            while not found_bound and b <= upper_bound:
                 if MarabouAPI.check_bound('marabou_model/', b):
                     found_bound = True
                 else:
