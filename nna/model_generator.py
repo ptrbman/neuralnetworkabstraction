@@ -5,23 +5,8 @@ import numpy as np
 from tensorflow import keras
 
 class ModelGenerator():
-    """Contains static functions to generate (i.e., trains) a model for a particular configuration.
+    """Contains static functions to generate (i.e., trains) a model for a particular function.
     """
-
-
-    def linear(xs, config):
-        """Computes the function defined by config for inputs xs.
-
-        :param xs: input values for the x-variables.
-        :param config: config describing function.
-        :returns: the resulting sum.
-
-        """
-        sum = 0
-        for i in range(config.n):
-            sum += config.coefficients[i]*xs[i]
-        return sum
-
 
     def create_network(layer_sizes):
         """Creates a pytorch model with layer_sizes
@@ -40,11 +25,11 @@ class ModelGenerator():
         return model
 
 
-    def gen_data(count, config):
-        """Generate count data-points using config.
+    def gen_data(count, function):
+        """Generate count data-points using function.
 
         :param count: number of data points to generate.
-        :param config: configuration of function.
+        :param function: function.
         :returns: two arrays with x- and y-values for each data-point.
 
         """
@@ -52,31 +37,31 @@ class ModelGenerator():
         data_y = []
 
         # Always include the zero-vector
-        zero_x = [0]*config.n
+        zero_x = [0]*function.n
         data_x.append(tf.transpose(tf.convert_to_tensor(zero_x)))
-        data_y.append(tf.convert_to_tensor([ModelGenerator.linear(zero_x, config)]))
+        data_y.append(tf.convert_to_tensor([function.evaluate(zero_x)]))
 
         for i in range(count-1):
             xs = []
-            for _ in range(config.n):
+            for _ in range(function.n):
                 xs.append(random.randint(0,1))
-            y = ModelGenerator.linear(xs, config)
+            y = function.evaluate(xs)
             data_x.append(tf.transpose(tf.convert_to_tensor(xs)))
             data_y.append(tf.convert_to_tensor([y]))
 
         return (np.array(data_x), np.array(data_y))
 
-    def generate_model(config, layer_sizes, epochs=5, count=100000):
-        """Generate and train a pytorch model based on config with layer_size as layer
+    def generate_model(function, layer_sizes, epochs=5, count=100000):
+        """Generate and train a pytorch model based on function with layer_size as layer
             sizes. Count is the number of data-points to use for training.
 
-        :param config: configuration for underlying function
+        :param config: underlying function
         :param layer_sizes: sizes of layers
         :param count: number of data-points to generate for training
         :returns: pytorch model
 
         """
-        (x_train, y_train) = ModelGenerator.gen_data(count, config)
+        (x_train, y_train) = ModelGenerator.gen_data(count, function)
         model = ModelGenerator.create_network(layer_sizes)
 
         loss_fn = tf.keras.losses.MeanSquaredError(reduction='none', name="mean_squared_error")

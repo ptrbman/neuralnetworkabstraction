@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from nna.configuration import Configuration
+from nna.function import LinearFunction
 from nna.model_generator import ModelGenerator
 from nna.torch_api import TorchAPI
 from nna.utils import Utils
@@ -8,12 +8,12 @@ from nna.utils import Utils
 import pickle
 
 def quick_test(generate=False):
-    c = Configuration(6, 1, 100)
+    f = LinearFunction(6, 1, 20)
 
     nn = None
 
     if generate:
-        torch_model = ModelGenerator.generate_model(c, [c.n, 2, 3, 1])
+        torch_model = ModelGenerator.generate_model(f, [f.n, 2, 3, 1], 5, 20000)
         nn = TorchAPI.torch2nn(torch_model)
 
         with open('test.mdl', 'wb') as outfile:
@@ -26,14 +26,14 @@ def quick_test(generate=False):
     #TODO: Do we want split to be mutating or do we copy it?
     nn.color_network()
 
-    ub = 100
+    ub = 20
     binary_bounds = Utils.binary_bounds(nn, ub)
     iterative_bounds = Utils.iterative_bounds(nn, ub)
 
-    print("Coefficients:      \t", c.coefficients)
-    print("Input\tBinary\tIterative:")
+    print("Function:      \t", f)
+    print("Input\t  Binary\t  Iterative:")
     for i, (binary, iterative) in enumerate(zip(binary_bounds, iterative_bounds)):
-        print(i, "\t", binary, "\t", iterative)
+        print(i, "\t  ", binary, "\t  ", iterative)
 
 
 quick_test(True)
