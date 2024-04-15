@@ -9,7 +9,7 @@ class ModelGenerator():
     """
 
 
-    def f(xs, config):
+    def linear(xs, config):
         """Computes the function defined by config for inputs xs.
 
         :param xs: input values for the x-variables.
@@ -54,13 +54,13 @@ class ModelGenerator():
         # Always include the zero-vector
         zero_x = [0]*config.n
         data_x.append(tf.transpose(tf.convert_to_tensor(zero_x)))
-        data_y.append(tf.convert_to_tensor([ModelGenerator.f(zero_x, config)]))
+        data_y.append(tf.convert_to_tensor([ModelGenerator.linear(zero_x, config)]))
 
         for i in range(count-1):
             xs = []
             for _ in range(config.n):
                 xs.append(random.randint(0,1))
-            y = ModelGenerator.f(xs, config)
+            y = ModelGenerator.linear(xs, config)
             data_x.append(tf.transpose(tf.convert_to_tensor(xs)))
             data_y.append(tf.convert_to_tensor([y]))
 
