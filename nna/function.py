@@ -96,7 +96,7 @@ class PairsFunction(Function):
         """
         sum = 0
         for i in range(0, self.n, 2):
-            sum += self.coefficients[i//2]*xs[i]*xs[i+1]
+            sum += self.coefficients[i//2]*xs[i]*xs[i//2+1]
         return sum
 
 

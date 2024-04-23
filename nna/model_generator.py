@@ -4,6 +4,16 @@ import random
 import numpy as np
 from tensorflow import keras
 
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import torch
+from torch import nn, optim
+import torch.nn.functional as F
+import numpy as np
+import tensorflow as tf
+import pickle
+
+
 class ModelGenerator():
     """Contains static functions to generate (i.e., trains) a model for a particular function.
     """
@@ -25,7 +35,7 @@ class ModelGenerator():
         return model
 
 
-    def gen_data(count, function):
+    def gen_data(count, function, ub):
         """Generate count data-points using function.
 
         :param count: number of data points to generate.
@@ -44,14 +54,14 @@ class ModelGenerator():
         for i in range(count-1):
             xs = []
             for _ in range(function.n):
-                xs.append(random.randint(0,1))
+                xs.append(random.randint(0,ub))
             y = function.evaluate(xs)
             data_x.append(tf.transpose(tf.convert_to_tensor(xs)))
             data_y.append(tf.convert_to_tensor([y]))
 
         return (np.array(data_x), np.array(data_y))
 
-    def generate_model(function, layer_sizes, epochs=5, count=100000):
+    def generate_model(function, layer_sizes, ub, epochs=5, count=100000):
         """Generate and train a pytorch model based on function with layer_size as layer
             sizes. Count is the number of data-points to use for training.
 
@@ -61,7 +71,7 @@ class ModelGenerator():
         :returns: pytorch model
 
         """
-        (x_train, y_train) = ModelGenerator.gen_data(count, function)
+        (x_train, y_train) = ModelGenerator.gen_data(count, function, ub)
         model = ModelGenerator.create_network(layer_sizes)
 
         loss_fn = tf.keras.losses.MeanSquaredError(reduction='none', name="mean_squared_error")
@@ -72,3 +82,45 @@ class ModelGenerator():
         model.fit(x_train, y_train, epochs=epochs)
 
         return model
+
+    def csv2model(infile, layer_sizes, epochs=50):
+
+        df = pd.read_csv(infile, index_col=False)
+
+        X = df[df.columns[1:]]
+        y = df[df.columns[0:1]]
+
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=42
+        )
+
+        X_val = X_train[-100:]
+        y_val = y_train[-100:]
+        X_train = X_train[:-100]
+        y_train = y_train[:-100]
+
+
+        print(X)
+        print(y)
+
+        # SMALL has 13 features
+        # MEDIUM has 17 features
+        torch_model = ModelGenerator.create_network(layer_sizes)
+        loss_fn = tf.keras.losses.MeanSquaredError(reduction='none', name="mean_squared_error")
+        torch_model.compile(optimizer='adam',
+                    loss=loss_fn,
+                    metrics=['accuracy'])
+
+
+        history = torch_model.fit(
+            X_train,
+            y_train,
+            batch_size=32,
+            epochs=epochs,
+            # We pass some validation for
+            # monitoring validation loss and metrics
+            # at the end of each epoch
+            validation_data=(X_val, y_val),
+        )
+
+        return torch_model

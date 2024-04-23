@@ -11,7 +11,7 @@ class Utils:
 
 
     # If upper_bound is too low, false result is reported
-    def binary_bounds(nn, upper_bound):
+    def binary_bounds(nn, upper_bound, MAX_IN=1):
         """Finds an upper bound (lower than upper_bound) for a nn using binary
         search. Note: if the upper bound is greater than upper_bound, this method will
         return a false result!
@@ -21,9 +21,11 @@ class Utils:
         :returns: an upper bound for nn
 
         """
+
+        print("MAX_IN: ", MAX_IN)
         results = []
         for i in range(nn.layers[0].inputs):
-            diff_net = nn.create_difference_network(i)
+            diff_net = nn.create_difference_network(i, MAX_IN)
             torch_diff = TorchAPI.nn2torch(diff_net)
             tf.saved_model.save(torch_diff, 'marabou_model/')
 
@@ -31,9 +33,10 @@ class Utils:
             ub = upper_bound
             bound = ub / 2
             # We keep searching until upper bound and lower bound is within distance of two
-            while ub > lb + 2:
+            while ub > lb + 1:
+                print(";; ", ub, ", ", lb)
                 # If bound is respected, it is a new upper bound, else it is a new lower bound
-                if MarabouAPI.check_bound('marabou_model/', bound):
+                if MarabouAPI.check_bound('marabou_model/', bound, MAX_IN):
                     ub = bound
                 else:
                     lb = bound
@@ -42,7 +45,7 @@ class Utils:
 
         return results
 
-    def iterative_bounds(nn, upper_bound):
+    def iterative_bounds(nn, upper_bound, MAX_IN=1):
         """Finds an upper bound (lower than upper_bound) for a nn using iterative
         search. If the upper bound is greater than upper_bound, this method will
         return None.
@@ -54,14 +57,14 @@ class Utils:
         """
         results = []
         for i in range(nn.layers[0].inputs):
-            diff_net = nn.create_difference_network(i)
+            diff_net = nn.create_difference_network(i, MAX_IN)
             torch_diff = TorchAPI.nn2torch(diff_net)
             tf.saved_model.save(torch_diff, 'marabou_model/')
 
             b = 1
             found_bound = False
             while not found_bound and b <= upper_bound:
-                if MarabouAPI.check_bound('marabou_model/', b):
+                if MarabouAPI.check_bound('marabou_model/', b, MAX_IN):
                     found_bound = True
                 else:
                     b += 1
