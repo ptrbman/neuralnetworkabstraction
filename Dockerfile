@@ -8,7 +8,7 @@ WORKDIR /workspace
 RUN pip install --no-cache-dir torch torchvision torchaudio tensorflow maraboupy
 
 # Install additional useful packages
-RUN pip install --no-cache-dir numpy pandas matplotlib ipython jupyterlab
+RUN pip install --no-cache-dir numpy pandas matplotlib ipython jupyterlab scikit-learn
 
 # Make port 8888 available to the world outside this container
 EXPOSE 8888
@@ -17,4 +17,4 @@ EXPOSE 8888
 ENV PYTHONUNBUFFERED=1
 
 # Set default command to open Bash when starting the container
-CMD ["bash"]
+CMD ["python","quick_test.py"]
