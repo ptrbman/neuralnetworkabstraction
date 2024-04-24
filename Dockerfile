@@ -15,6 +15,3 @@ EXPOSE 8888
 
 # Configure environment
 ENV PYTHONUNBUFFERED=1
-
-# Set default command to open Bash when starting the container
-CMD ["python","quick_test.py"]

@@ -80,12 +80,54 @@ def quick_test(generate=False):
     return "\n".join(ret)
 
 
+def quick_test_real_data(csv_file,num_inputs,generate=False):
+    nn = None
+    upper_bound = 1
+
+    if generate:
+        torch_model = ModelGenerator.csv2model(csv_file,
+            layer_sizes=[num_inputs, 10, 9, 1],)
+        nn = TorchAPI.torch2nn(torch_model)
+
+        with open(f"test_real_{csv_file}.mdl", "wb") as outfile:
+            pickle.dump(nn, outfile)
+    else:
+        with open(f"test_real_{csv_file}.mdl", "rb") as infile:
+            nn = pickle.load(infile)
+
+    model = TorchAPI.nn2torch(nn)
+    # print("Function:      \t", f)
+    # check_all_inputs(nn, 20)
+
+    # TODO: we assume all inputs are 0 or 1
+    # TODO: Do we want split to be mutating or do we copy it?
+    nn.color_network()
+
+    max_bound = 50
+    binary_bounds = Utils.binary_bounds(nn, max_bound, upper_bound)
+    # iterative_bounds = Utils.iterative_bounds(nn, max_bound, ub)
+
+    ret = []
+    ret.append("Real data from file:      \t" + str(csv_file))
+    ret.append("Input\t  Binary:")
+    for i, binary in enumerate(binary_bounds):
+        ret.append(str(i) + "\t  " + str(binary))
+    return "\n".join(ret)
+
 all_results = []
-for i in range(10):
-    ret = quick_test(True)
+# for i in range(10):
+#     ret = quick_test(True)
+#     all_results.append(ret)
+
+CSV_13_INPUTS = "data/inputs_13_1_output.csv"
+CSV_17_INPUTS = "data/inputs_17_1_output.csv"
+CSV_27_INPUTS = "data/inputs_27_1_output.csv"
+csvs_inputs = {CSV_13_INPUTS:13,CSV_17_INPUTS:17,CSV_27_INPUTS:27}
+
+for csv,num in csvs_inputs:
+    ret = quick_test_real_data(csv,num,generate=True)
     all_results.append(ret)
-
-
+    
 print("Done")
 for r in all_results:
     print("............................")
