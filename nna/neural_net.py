@@ -275,7 +275,7 @@ class NeuralNet():
             lines.append(str(l))
         return '\n'.join(lines)
 
-    def remove_input(self, input_node, maximizing):
+    def remove_input(self, input_node, maximizing, MAX_IN=1):
         """Functions for removing a node and creating a difference network and verifying
         a bound Remove node from list, and replace with MAX case if maximizing
         otherwise MIN.
@@ -294,12 +294,15 @@ class NeuralNet():
             w = first_layer.weights[input_node][i]
             c = first_layer.colors[i]
 
+            # Here we assume that MAX = 1 (thus b += w instead of b += MAX*w)
             if maximizing:
                 if (w > 0 and c == Layer.GREEN) or (w < 0 and c == Layer.RED):
-                    b += w
+                    b += w*MAX_IN
             else:
                  if (w > 0 and c == Layer.RED) or (w < 0 and c == Layer.GREEN):
-                    b += w
+                    b += w*MAX_IN
+
+            # Also, if we have non-zero minimum, we might have to do b += MIN*w (or b-= MIN*w)
 
             fl_biases.append(b)
 
@@ -358,7 +361,7 @@ class NeuralNet():
         return Layer(name, inputs, nodes, weights, biases)
 
     # TODO: Add assertion that network is colored
-    def create_difference_network(self, input_node):
+    def create_difference_network(self, input_node, MAX_IN):
         """Creates difference network obtained by removing input_note. This is a network
         which as an output obtains the difference between the over-estimation and
         under-estimation of removing input_node.
@@ -367,8 +370,8 @@ class NeuralNet():
         :returns: a difference network
 
         """
-        network_inc = self.remove_input(input_node, True)
-        network_dec = self.remove_input(input_node, False)
+        network_inc = self.remove_input(input_node, True, MAX_IN)
+        network_dec = self.remove_input(input_node, False, MAX_IN)
 
         # We have colors of the first hidden layer. Go through the inputs, keep
         # everything except input_node. When removing input_node, we create two

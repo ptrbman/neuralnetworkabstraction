@@ -7,7 +7,7 @@ class MarabouAPI:
     """Contains static functions to interface with Marabou verifier.
     """
 
-    def check_bound(infile, bound):
+    def check_bound(infile, bound, MAX_IN):
         """Verify if model found in infile is bounded above by bound.
 
         :param infile: file to load pytorch model
@@ -22,7 +22,7 @@ class MarabouAPI:
 
         for var in inputVars:
             network.setLowerBound(var, 0)
-            network.setUpperBound(var, 1)
+            network.setUpperBound(var, MAX_IN)
         network.addInequality(outputVar, [-1.0], -bound)
 
         result, values, stats = network.solve()
