@@ -8,13 +8,12 @@ import copy
 
 # For a layer we store the incoming weights and biases. inputs are the number of
 # nodes in the preceding layer.
-class Layer():
-    """Represents a layer with its incoming weights in a NeuralNet.
-    """
+class Layer:
+    """Represents a layer with its incoming weights in a NeuralNet."""
 
     COLORLESS = 0
     GREEN = 1
-    RED = - 1
+    RED = -1
 
     def __init__(self, name, inputs, nodes, weights, biases, colors=None):
         """Constructor of Layer.
@@ -36,13 +35,13 @@ class Layer():
         if colors:
             self.colors = colors
         else:
-            self.colors = [Layer.COLORLESS]*self.nodes
+            self.colors = [Layer.COLORLESS] * self.nodes
 
         # Ensure proper dimensions
-        assert(len(weights) == inputs)
+        assert len(weights) == inputs
         for ws in weights:
-            assert(len(ws) == nodes)
-        assert(len(biases) == nodes)
+            assert len(ws) == nodes
+        assert len(biases) == nodes
 
     def updateColors(self, newColors):
         """Update colors using a list (often obtained from getInputColors from next layer)
@@ -51,11 +50,10 @@ class Layer():
         :returns: None
 
         """
-        assert(len(newColors) == len(self.colors))
+        assert len(newColors) == len(self.colors)
         self.colors = newColors
 
     def getInputColors(self):
-
         """This propagates the colors from the current layer to the one before
 
         :returns: colors for the preceding layer (with possibility of COLORLESS nodes).
@@ -72,21 +70,20 @@ class Layer():
         for i in range(self.inputs):
             is_red = False
             is_green = False
-            for idx, w in enumerate(self.weights[i]) :
+            for idx, w in enumerate(self.weights[i]):
                 if w > 0:
                     if self.colors[idx] == Layer.GREEN:
                         is_green = True
                     else:
-                        assert(self.colors[idx] == Layer.RED)
+                        assert self.colors[idx] == Layer.RED
                         is_red = True
 
                 if w < 0:
                     if self.colors[idx] == Layer.GREEN:
                         is_red = True
                     else:
-                        assert(self.colors[idx] == Layer.RED)
+                        assert self.colors[idx] == Layer.RED
                         is_green = True
-
 
             if is_red and is_green:
                 input_colors.append(Layer.COLORLESS)
@@ -95,9 +92,10 @@ class Layer():
             elif is_green:
                 input_colors.append(Layer.GREEN)
             else:
-                raise Exception("Unexpected coloring error (maybe all weights are zero?)")
+                raise Exception(
+                    "Unexpected coloring error (maybe all weights are zero?)"
+                )
         return input_colors
-
 
     def __str__(self):
         """String representation of a Layer.
@@ -105,14 +103,23 @@ class Layer():
         :returns: string representation
 
         """
-        return "<<<Layer: " + self.name + ">>>\nWeights: " + str(self.weights) + "\nBias: " + str(self.biases) + "\nColors: " + str(self.colors)
+        return (
+            "<<<Layer: "
+            + self.name
+            + ">>>\nWeights: "
+            + str(self.weights)
+            + "\nBias: "
+            + str(self.biases)
+            + "\nColors: "
+            + str(self.colors)
+        )
 
-class NeuralNet():
+
+class NeuralNet:
     """Represents a Neural Network which can be manipulated via coloring, split and
     creating difference networks.
 
     """
-
 
     def __init__(self, layers):
         """NeuralNet constructor.
@@ -122,7 +129,6 @@ class NeuralNet():
 
         """
         self.layers = layers
-
 
     def getWeights(self, layer_idx):
         """Get weights of layer layer_idx.
@@ -141,7 +147,6 @@ class NeuralNet():
 
         """
         return self.layers[layer_idx].biases
-
 
     # TODO: Do we want this to be in-place or copy?
     def split_node(self, layer, node):
@@ -169,7 +174,7 @@ class NeuralNet():
 
         """
 
-        #TODO: can we show that we only need two colors?
+        # TODO: can we show that we only need two colors?
 
         # Current Layer
         cur_layer = self.layers[layer]
@@ -178,19 +183,22 @@ class NeuralNet():
         cl_nodes = cur_layer.nodes + 1
         cl_biases = []
 
-
         cl_weights = []
         for w in cur_layer.weights:
-            cl_weights.append(w[0:node] + [w[node]]*2 + w[node+1:])
+            cl_weights.append(w[0:node] + [w[node]] * 2 + w[node + 1 :])
 
-        cl_biases = cur_layer.biases[0:node] + [cur_layer.biases[node]]*2 + cur_layer.biases[node+1:]
+        cl_biases = (
+            cur_layer.biases[0:node]
+            + [cur_layer.biases[node]] * 2
+            + cur_layer.biases[node + 1 :]
+        )
 
         new_cur_layer = Layer(cl_name, cl_inputs, cl_nodes, cl_weights, cl_biases)
         self.layers[layer] = new_cur_layer
 
         # If this is not the last layer, update following layer
         if len(self.layers) > layer + 1:
-            next_layer = self.layers[layer+1]
+            next_layer = self.layers[layer + 1]
             nl_weights = []
 
             for cl_node, cl_node_ws in enumerate(next_layer.weights):
@@ -198,10 +206,14 @@ class NeuralNet():
                     inc_weights = []
                     dec_weights = []
                     for color, w in zip(next_layer.colors, cl_node_ws):
-                        if (color == Layer.GREEN and w > 0) or (color == Layer.RED and w < 0):
+                        if (color == Layer.GREEN and w > 0) or (
+                            color == Layer.RED and w < 0
+                        ):
                             inc_weights.append(w)
                             dec_weights.append(0)
-                        elif (color == Layer.RED and w > 0) or (color == Layer.GREEN and w < 0):
+                        elif (color == Layer.RED and w > 0) or (
+                            color == Layer.GREEN and w < 0
+                        ):
                             inc_weights.append(0)
                             dec_weights.append(w)
                         elif color == Layer.COLORLESS:
@@ -220,7 +232,9 @@ class NeuralNet():
             nl_biases = next_layer.biases
             nl_colors = next_layer.colors
 
-            self.layers[layer+1] = Layer(nl_name, nl_inputs, nl_nodes, nl_weights, nl_biases, nl_colors)
+            self.layers[layer + 1] = Layer(
+                nl_name, nl_inputs, nl_nodes, nl_weights, nl_biases, nl_colors
+            )
 
     def color_network(self):
         """Colors network in place. We try to color the next layer If it doesn't work, we need to split
@@ -233,14 +247,14 @@ class NeuralNet():
 
         """
 
-        #TODO: Assumption that network has one output node
+        # TODO: Assumption that network has one output node
         # Color output node
         self.layers[-1].updateColors([Layer.GREEN])
 
         # Begin with layer before output layer and iterate until first layer
         cur_layer = len(self.layers) - 2
-        while (cur_layer >= 0):
-            colors = self.layers[cur_layer+1].getInputColors()
+        while cur_layer >= 0:
+            colors = self.layers[cur_layer + 1].getInputColors()
 
             # This means we have a colorless node, we need to split it!
             # If we do it in reverse order, the indices will not change
@@ -254,14 +268,13 @@ class NeuralNet():
                 self.layers[cur_layer].updateColors(colors)
                 cur_layer -= 1
 
-
     def layer_sizes(self):
         """Returns the sizes of the layers in the network (including the input layer).
 
         :returns: Layer sizes.
 
         """
-        internal_layers = list(map(lambda x : x.nodes, self.layers))
+        internal_layers = list(map(lambda x: x.nodes, self.layers))
         return [self.layers[0].inputs] + internal_layers
 
     def __str__(self):
@@ -273,7 +286,7 @@ class NeuralNet():
         lines = ["Neural Network"]
         for l in self.layers:
             lines.append(str(l))
-        return '\n'.join(lines)
+        return "\n".join(lines)
 
     def remove_input(self, input_node, maximizing, MAX_IN=1):
         """Functions for removing a node and creating a difference network and verifying
@@ -286,7 +299,10 @@ class NeuralNet():
 
         """
         first_layer = self.layers[0]
-        fl_weights = self.layers[0].weights[0:input_node] + self.layers[0].weights[input_node+1:]
+        fl_weights = (
+            self.layers[0].weights[0:input_node]
+            + self.layers[0].weights[input_node + 1 :]
+        )
 
         fl_biases = []
         for i in range(first_layer.nodes):
@@ -297,10 +313,10 @@ class NeuralNet():
             # Here we assume that MAX = 1 (thus b += w instead of b += MAX*w)
             if maximizing:
                 if (w > 0 and c == Layer.GREEN) or (w < 0 and c == Layer.RED):
-                    b += w*MAX_IN
+                    b += w * MAX_IN
             else:
-                 if (w > 0 and c == Layer.RED) or (w < 0 and c == Layer.GREEN):
-                    b += w*MAX_IN
+                if (w > 0 and c == Layer.RED) or (w < 0 and c == Layer.GREEN):
+                    b += w * MAX_IN
 
             # Also, if we have non-zero minimum, we might have to do b += MIN*w (or b-= MIN*w)
 
@@ -315,7 +331,6 @@ class NeuralNet():
         new_network.layers[0] = new_first_layer
         return new_network
 
-
     def merge_input_layer(l1, l2):
         """Merges two input layers l1 and l2. When merging input layers, the resulting
         layer should share the same inputs.
@@ -327,7 +342,7 @@ class NeuralNet():
         """
         name = l1.name + "." + l2.name
         inputs = l1.inputs
-        assert(l1.inputs == l2.inputs)
+        assert l1.inputs == l2.inputs
         nodes = l1.nodes + l2.nodes
         weights = []
         for w1, w2 in zip(l1.weights, l2.weights):
@@ -352,9 +367,9 @@ class NeuralNet():
         nodes = l1.nodes + l2.nodes
         weights = []
         for w in l1.weights:
-            weights.append(w + [0]*l1.nodes)
+            weights.append(w + [0] * l1.nodes)
         for w in l2.weights:
-            weights.append([0]*l2.nodes + w)
+            weights.append([0] * l2.nodes + w)
 
         biases = l1.biases + l2.biases
 
@@ -380,10 +395,14 @@ class NeuralNet():
         # minimizing network adds to bias such that end result is minimzed.
 
         # First layer is special as it has inputs which should be duplicated:
-        layers = [NeuralNet.merge_input_layer(network_inc.layers[0], network_dec.layers[0])]
+        layers = [
+            NeuralNet.merge_input_layer(network_inc.layers[0], network_dec.layers[0])
+        ]
 
         # We merge all internal layers:
-        for idx, (inc_l, dec_l) in enumerate(zip(network_inc.layers[1:], network_dec.layers[1:])):
+        for idx, (inc_l, dec_l) in enumerate(
+            zip(network_inc.layers[1:], network_dec.layers[1:])
+        ):
             layers.append(NeuralNet.merge_layers(inc_l, dec_l))
 
         subtraction_layer = []

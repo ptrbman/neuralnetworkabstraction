@@ -14,9 +14,8 @@ import tensorflow as tf
 import pickle
 
 
-class ModelGenerator():
-    """Contains static functions to generate (i.e., trains) a model for a particular function.
-    """
+class ModelGenerator:
+    """Contains static functions to generate (i.e., trains) a model for a particular function."""
 
     def create_network(layer_sizes):
         """Creates a pytorch model with layer_sizes
@@ -27,15 +26,16 @@ class ModelGenerator():
         """
         model = keras.models.Sequential()
 
-        model.add(keras.layers.InputLayer(shape=(layer_sizes[0],), name='input'))
+        model.add(keras.layers.InputLayer(shape=(layer_sizes[0],), name="input"))
         for idx, ls in enumerate(layer_sizes[1:-1]):
-            model.add(keras.layers.Dense(ls, activation='relu', name='hidden' + str(idx)))
-        model.add(keras.layers.Dense(layer_sizes[-1], name='output'))
+            model.add(
+                keras.layers.Dense(ls, activation="relu", name="hidden" + str(idx))
+            )
+        model.add(keras.layers.Dense(layer_sizes[-1], name="output"))
 
         return model
 
-
-    def gen_data(count, function, ub):
+    def gen_data(count, function, upper_bound):
         """Generate count data-points using function.
 
         :param count: number of data points to generate.
@@ -47,21 +47,21 @@ class ModelGenerator():
         data_y = []
 
         # Always include the zero-vector
-        zero_x = [0]*function.n
+        zero_x = [0] * function.n
         data_x.append(tf.transpose(tf.convert_to_tensor(zero_x)))
         data_y.append(tf.convert_to_tensor([function.evaluate(zero_x)]))
 
-        for i in range(count-1):
+        for i in range(count - 1):
             xs = []
             for _ in range(function.n):
-                xs.append(random.randint(0,ub))
+                xs.append(random.randint(0, upper_bound))
             y = function.evaluate(xs)
             data_x.append(tf.transpose(tf.convert_to_tensor(xs)))
             data_y.append(tf.convert_to_tensor([y]))
 
         return (np.array(data_x), np.array(data_y))
 
-    def generate_model(function, layer_sizes, ub, epochs=5, count=100000):
+    def generate_model(function, layer_sizes, upper_bound, epochs=5, count=100000):
         """Generate and train a pytorch model based on function with layer_size as layer
             sizes. Count is the number of data-points to use for training.
 
@@ -71,13 +71,13 @@ class ModelGenerator():
         :returns: pytorch model
 
         """
-        (x_train, y_train) = ModelGenerator.gen_data(count, function, ub)
+        (x_train, y_train) = ModelGenerator.gen_data(count, function, upper_bound)
         model = ModelGenerator.create_network(layer_sizes)
 
-        loss_fn = tf.keras.losses.MeanSquaredError(reduction='none', name="mean_squared_error")
-        model.compile(optimizer='adam',
-                    loss=loss_fn,
-                    metrics=['accuracy'])
+        loss_fn = tf.keras.losses.MeanSquaredError(
+            reduction="none", name="mean_squared_error"
+        )
+        model.compile(optimizer="adam", loss=loss_fn, metrics=["accuracy"])
 
         model.fit(x_train, y_train, epochs=epochs)
 
@@ -99,20 +99,18 @@ class ModelGenerator():
         X_train = X_train[:-100]
         y_train = y_train[:-100]
 
-
         print(X)
         print(y)
 
         # SMALL has 13 features
         # MEDIUM has 17 features
         torch_model = ModelGenerator.create_network(layer_sizes)
-        loss_fn = tf.keras.losses.MeanSquaredError(reduction='none', name="mean_squared_error")
-        torch_model.compile(optimizer='adam',
-                    loss=loss_fn,
-                    metrics=['accuracy'])
+        loss_fn = tf.keras.losses.MeanSquaredError(
+            reduction="none", name="mean_squared_error"
+        )
+        torch_model.compile(optimizer="adamw", loss=loss_fn, metrics=["accuracy"])
 
-
-        history = torch_model.fit(
+        _ = torch_model.fit(
             X_train,
             y_train,
             batch_size=32,

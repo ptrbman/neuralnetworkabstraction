@@ -15,7 +15,6 @@ class MarabouAPI:
         :returns: True if bound is respected, otherwise False
 
         """
-
         network = Marabou.read_tf(infile, modelType="savedModel_v2")
         inputVars = network.inputVars[0][0]
         outputVar = network.outputVars[0][0]

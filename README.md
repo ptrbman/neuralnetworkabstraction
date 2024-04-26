@@ -14,19 +14,17 @@ To install, begin by cloning repo.
    $ git clone https://github.com/ptrbman/neuralnetworkabstraction.git
 ```
 
-Ensure that Python 3.x is installed and create a virtual environment:
+Build the Docker image using
 
 
 ```
-   $ python -m venv nnenv
-   $ source nnenv/bin/activate
-   (nnenv) $
+   docker build -t abstraction-test-environment .
 ```
 
-Then install prerequisites (TensorFlow, Torch, Marabou)
+Then start the container by using
 
 ```
-   (nnenv) $ pip install tensorflow torch maraboupy
+   docker run -it -p 8888:8888 -v $(pwd):/workspace abstraction-test-environment
 ```
 
 
@@ -35,7 +33,7 @@ Then install prerequisites (TensorFlow, Torch, Marabou)
 Do to a quick test of the framework, run the supplmented ``quick_test.py``:
 
 ```
-   (nnenv) $ python quick_test.py
+   $ python quick_test.py
 ```
 
 Note that since initial weights are non-deterministic, the quick test is not
