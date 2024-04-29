@@ -108,7 +108,7 @@ class ModelGenerator:
         loss_fn = tf.keras.losses.MeanSquaredError(
             reduction="none", name="mean_squared_error"
         )
-        torch_model.compile(optimizer="adamw", loss=loss_fn, metrics=["accuracy"])
+        torch_model.compile(optimizer="adam", loss=loss_fn, metrics=["accuracy"])
 
         _ = torch_model.fit(
             X_train,
