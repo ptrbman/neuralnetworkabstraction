@@ -124,7 +124,7 @@ CSV_17_INPUTS = "data/inputs_17_1_output.csv"
 CSV_27_INPUTS = "data/inputs_27_1_output.csv"
 csvs_inputs = {CSV_13_INPUTS:13,CSV_17_INPUTS:17,CSV_27_INPUTS:27}
 
-for csv,num in csvs_inputs:
+for csv,num in csvs_inputs.items():
     ret = quick_test_real_data(csv,num,generate=True)
     all_results.append(ret)
     
